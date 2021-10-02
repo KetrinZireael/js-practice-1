@@ -1,26 +1,29 @@
-// Створити 2-вимірний масив HEIGHT * WIDTH, заповнити його випадковими цілими числами [-100..100].
-
-const HEIGTH = 5;
-const WIDTH = 5;
-const MAX_NUMBER = 100;
-const MIN_NUMBER = -100;
+/*
+* Стоврити 2-вимірний масив HEIGHT * WIDTH, заповнити його цілими числами 1, 2, 3 ітд змійкою
+* починаючи з лівого верхнього кута зліва-направо та зверху-вниз,
+* наприклад, при HEIGHT = 3, WIDTH = 4
+* [
+*   [1,  2,  3,  4],
+*   [8,  7,  6,  5],
+*   [9,  10, 11, 12]
+* ]
+* */
 
 const array = [];
+const HEIGHT = 5;
+const WIDTH = 5;
 
-for (let i = 0; i < HEIGTH; i++) {
-    array[i] = [];
-    for (let j = 0; j < WIDTH; j++) {
-        array[i][j] = Math.floor(Math.random() * MAX_NUMBER + Math.random() * MIN_NUMBER);
-    }
-}
-
-let sum = 0;
-for (let i = 0; i < HEIGTH; i++) {
-    for (let j = 0; j < WIDTH; j++) {
-        if (array[i][j] > 0) {
-            sum += array[i][j];
+for (let row = 0; row < HEIGHT; row++) {
+    array[row] = [];
+    const isOdd = row % 2 === 0;
+    const previousRowsSum = row * WIDTH;
+    for (let column = 0; column < WIDTH; column++) {
+        if(isOdd) {
+            array[row][column] = column + 1 + previousRowsSum;
+        } else {
+            array[row][column] = WIDTH - column + previousRowsSum;
         }
     }
 }
-console.table(array);
-console.log(sum);
+
+console.log(array);
