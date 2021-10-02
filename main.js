@@ -1,31 +1,57 @@
 /*
-* Стоврити 2-вимірний масив HEIGHT * WIDTH, заповнити його цілими числами 1, 2, 3 ітд змійкою
-* починаючи з правого нижнього кута знизу-верх,
-* наприклад, при HEIGHT = 3, WIDTH = 4
-* [
-*   [10,  9,  4,  3],
-*   [11,  8,  5,  2],
-*   [12,  7,  6,  1]
-* ]
+* Написати генератор паролей, передбачити можливість:
+* включати/виключати малі літери англ алфавіту
+* включати/виключати великі літери англ алфавіту
+* включати/виключати цифри
+* включати/виключати символи |!@#$%^&*_+-=
+*
+* опцію уникати подібні символи iloIO01
+*
+* задавати довжину
 * */
 
-const array = [];
-const HEIGHT = 7;
-const WIDTH = 5;
+const HAS_SMALL_LETTERS = true;
+const HAS_UPPER_LETTERS = true;
+const HAS_NUMBERS = true;
+const HAS_SPECIAL_SYMBOL = true;
+const HAS_SIMILAR_CHARS = true;
 
-for (let row = 0; row < HEIGHT; row++) {
-    array[row] = [];
+const SPECIAL_SYMBOLS = '|!#$%&*+-=?@^_';
+const SIMILAR_CHARS = 'iloIO01|';
 
-    for (let column = 0; column < WIDTH; column++) {
-        const isOdd = (WIDTH - column) % 2 == 0;
-        const previousValue = (WIDTH - column - 1) * HEIGHT;
+let passwordAvailableChars = [];
 
-        if(!isOdd) {
-            array[row][column] = previousValue + HEIGHT - row;
-        } else {
-            array[row][column] = previousValue + row + 1;
-        }
+if (HAS_SMALL_LETTERS) {
+    for (let i = 97; i < 123; i++) {
+        passwordAvailableChars.push(String.fromCharCode(i));
     }
 }
 
-console.table(array);
+if (HAS_UPPER_LETTERS) {
+    for (let i = 65; i < 91; i++) {
+        passwordAvailableChars.push(String.fromCharCode(i));
+    }
+}
+
+if (HAS_NUMBERS) {
+    for (let i = 0; i < 10; i++) {
+        passwordAvailableChars.push(i);
+    }
+}
+
+if (HAS_SPECIAL_SYMBOL) {
+    passwordAvailableChars.push(...SPECIAL_SYMBOLS);
+}
+
+if (!HAS_SIMILAR_CHARS) {
+    passwordAvailableChars = passwordAvailableChars.filter(char => SIMILAR_CHARS.includes(char));
+}
+
+const PASSWORD_LENGTH = 16;
+let password = '';
+
+while (password.length < PASSWORD_LENGTH) {
+    password += passwordAvailableChars[Math.floor(Math.random() * passwordAvailableChars.length)];
+}
+
+console.log(password);
