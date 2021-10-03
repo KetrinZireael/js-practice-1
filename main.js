@@ -1,27 +1,14 @@
-// Створити масив HEIGHT * WIDTH, заповнює його числами, які зростають від країв до центру, починаючи з 1.
-// Наприклад, при HEIGHT = 5, та WIDTH = 8.
-//   [
-//     [1, 1, 1, 1, 1, 1, 1, 1],
-//     [1, 2, 2, 2, 2, 2, 2, 1],
-//     [1, 2, 3, 3, 3, 3, 2, 1],
-//     [1, 2, 2, 2, 2, 2, 2, 1],
-//     [1, 1, 1, 1, 1, 1, 1, 1]
-//   ]
+// Знайти N випадкових точок, які розміщені між синусоїдою
+// та косинусоїдою на проміжку [PI/4...(2PI + PI/4)]
 
+const N = 10;
 const array = [];
 
-const HEIGHT = 5;
-const WIDTH = 8;
-
-for (let i = 0; i < HEIGHT; i++) {
-    let row = [];
-    for (let j = 0; j < WIDTH; j++) {
-
-        let widthNum = Math.min(j + 1, WIDTH - 1);
-        let heightNum = Math.min(i + 1, HEIGHT - i);
-        row[j] = Math.min(widthNum, heightNum);
-    }
-    array[i] = row;
+for (let i = 0; i < N; i++) {
+    const x = Math.random() * 2 * Math.PI + Math.PI / 4;
+    const maxY = Math.max(Math.sin(x), Math.cos(x));
+    const minY = Math.min(Math.sin(x), Math.cos(x));
+    const y = Math.random() * (maxY - minY) + minY;
+    array[i] = {x, y};
 }
-
-console.table(array);
+console.log(array);
