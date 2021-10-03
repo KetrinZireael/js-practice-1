@@ -1,14 +1,14 @@
-// Знайти N випадкових точок, які розміщені між синусоїдою
-// та косинусоїдою на проміжку [PI/4...(2PI + PI/4)]
+// Дано синусоїду та косинусоїду на відрізку [π/4..5π/4].
+// Якщо брати x через кожні π/180, то потрібно знайти значення x, при якому відстань між графіками по осі y буде максимальною.
 
-const N = 10;
-const array = [];
+let arr = [];
+let x = [];
 
-for (let i = 0; i < N; i++) {
-    const x = Math.random() * 2 * Math.PI + Math.PI / 4;
-    const maxY = Math.max(Math.sin(x), Math.cos(x));
-    const minY = Math.min(Math.sin(x), Math.cos(x));
-    const y = Math.random() * (maxY - minY) + minY;
-    array[i] = {x, y};
+for (let i = Math.PI / 4; i < 5 * Math.PI / 4; i = i + Math.PI / 180) {
+    arr.push(Math.sin(i) - Math.cos(i));
+    x.push(i);
 }
-console.log(array);
+const maxY = Math.max(...arr);
+const indexY = arr.indexOf(maxY);
+console.log(x[indexY]);
+
